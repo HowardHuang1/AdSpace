@@ -1,72 +1,53 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, Text, VStack, Input, Button, Avatar } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import './Chat.css';
 
-const ChatMessage = ({ text, isUser }) => (
-  <Box
-    p={1}
-    borderRadius="lg"
-    bg={isUser ? "blue.200" : "gray.200"}
-    alignSelf={isUser ? "flex-end" : "flex-start"}
-    maxW="70%"
-    wordBreak="break-word"
-  >
-    <Text fontSize="sm" color={isUser ? "white" : "black"}>
-      {text}
-    </Text>
-  </Box>
-);
+const Chat = () => {
+    const [prompt, setPrompt] = useState('');
+    const [response, setResponse] = useState('');
 
-const Chat = ({ messages, onSendMessage }) => {
-  const [inputValue, setInputValue] = useState("");
-  const messagesEndRef = useRef(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+        try {
+            const result = await axios.post(
+              'https://api.openai.com/v1/completions',
+              {
+                model: "text-davinci-003", // Or whichever model you're using
+                prompt: prompt,
+                temperature: 0.5,
+                max_tokens: 100,
+              },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer YOUR_API_KEY_HERE`, // Replace YOUR_API_KEY_HERE with your actual API key
+                }
+              }
+            );
 
-  const handleSendClick = () => {
-    if (inputValue.trim() !== "") {
-      onSendMessage(inputValue);
-      setInputValue("");
-    }
-  };
+            setResponse(result.data.choices[0].text);
+        } 
+        catch (error) {
+            console.error('Error fetching the data from OpenAI:', error);
+            setResponse('Failed to fetch response from OpenAI.');
+        }
+    };
 
-  useEffect(() => {
-    // Scroll to the latest message when new messages are added
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  return (
-    <VStack spacing={4} p={4} w="100%" mx="auto">
-      <Box
-        style={{
-          overflowY: "scroll",
-          maxHeight: "300px",
-          width: "100%",
-        }}
-      >
-        {messages.map((message, index) => (
-          <ChatMessage
-            key={index}
-            text={message.text}
-            isUser={message.isUser}
-          />
-        ))}
-        <div ref={messagesEndRef} />
-      </Box>
-      <Box>
-        <Input
-          placeholder="Type your message..."
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <Button onClick={handleSendClick} mt={2}>
-          Send
-        </Button>
-      </Box>
-      <div style={{ height: "1px", flexGrow: 1 }}></div>
-    </VStack>
-  );
+    return(
+        <div className="chat-component">
+            <form onSubmit={handleSubmit} className="chat-form">
+                <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="prompt-input"
+                placeholder="Enter your prompt"
+                ></textarea>
+                <button type="submit" className="submit-button">Submit</button>
+            </form>
+            <div className="response">{response}</div>
+        </div>
+    );
 };
 
 export default Chat;

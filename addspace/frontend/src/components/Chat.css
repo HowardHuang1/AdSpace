@@ -1,0 +1,66 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .chat-input {
+    width: 70%; /* Increase width */
+    padding: 10px 20px; /* Increase padding for bigger height and comfortable typing space */
+    font-size: 16px; /* Larger font size for better readability */
+    margin-bottom: 10px; /* Space between input and button */
+    border: 2px solid #ccc; /* Subtle border */
+    border-radius: 20px; /* Rounded corners */
+    box-sizing: border-box; /* Ensures padding doesn't increase the size beyond what's set */
+  }
+
+  .submit-button {
+    padding: 20px 60px;
+    border: none;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    border-radius: 5px;
+    background: linear-gradient(to right, #00FFA3, #000000);
+    cursor: pointer;
+  }
+  .submit-button:before {
+    content: "";
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    border-radius: 4px;
+    background-color: white;
+    z-index: -1;
+    transition: 200ms
+  }
+  .submit-button:hover:after {
+    content: attr(data);
+    font-size: 16px;
+    background: linear-gradient(to left, #00FFA3, #DC1FFF);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: 200ms
+  }
+  .submit-button:hover::before {
+    opacity: 50%;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+  .submit-button:hover::after{
+    color: white;
+  }
+
+  .chat-response {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners for the response box */
+    border: 1px solid #ccc; /* Subtle border for the response box */
+    width: 70%; /* Match input width for consistency */
+    word-wrap: break-word; /* Ensure long text doesn't overflow */
+  }
