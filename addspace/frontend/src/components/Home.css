@@ -1,0 +1,24 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  .container {
+    display: flex;
+    height: 100vh; /* 100% of the viewport height */
+  }
+  .left, .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+  }
+  .left {
+    background-color: #2e0478; /* Example color */
+    width: 70%;
+  }
+  .right {
+    background-color: #000000; /* Light grey, example color */
+    width: 30%;
+  }
