@@ -14,7 +14,9 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <div style={{ display: 'flex' }}>
         <Sidebar />
-        <div style={{ flex: 1 }}>Main Content Area</div>
+        <div style={{ flex: 1 }}>
+          Main Content Area
+        </div>
       </div>
     </ThemeProvider>
   );
