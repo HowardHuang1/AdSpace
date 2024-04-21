@@ -23,9 +23,9 @@ app.use(cors());
 
 // Setup the /train-model route to accept file uploads
 app.post('/train-model', upload.fields([
-  { name: 'video', maxCount: 12 },
-  { name: 'image', maxCount: 10 },
-  { name: 'audio', maxCount: 5 }
+  { name: 'video', maxCount: 1 },
+  { name: 'image', maxCount: 1 },
+  { name: 'audio', maxCount: 1 }
 ]), (req, res) => {
   console.log("/train-model triggered");
 
@@ -56,7 +56,15 @@ app.post('/train-model', upload.fields([
     }
     console.log(`stdout: ${stdout}`);
     console.error(`stderr: ${stderr}`);
-    res.send('Model training initiated successfully');
+    // Send the video file as a response
+    res.sendFile(output_path, (err) => {
+      if (err) {
+          console.log('Error sending file:', err);
+          res.status(500).send('Could not send the file');
+      } else {
+          console.log('File sent successfully');
+      }
+    });
   });
 });
 
