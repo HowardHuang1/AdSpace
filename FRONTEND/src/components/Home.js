@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import Sidebar from './Sidebar';
 import VideoPlayer from './VideoPlayer';
+import { useState } from 'react';
 
 const darkTheme = createTheme({
   palette: {
@@ -11,6 +12,7 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  const [vurl, setVurl] = useState(null);
   const appStyle = {
     display: 'flex',  // Use flexbox for layout
     height: '100vh',  // Full viewport height
@@ -24,9 +26,9 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <div style={appStyle}>
-        <Sidebar />
+        <Sidebar setVurl={setVurl} />
         <div style={videoContainerStyle}>
-          <VideoPlayer />
+          <VideoPlayer vurl={vurl} />
         </div>
       </div>
     </ThemeProvider>

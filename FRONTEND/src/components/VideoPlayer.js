@@ -1,7 +1,6 @@
 import React from 'react';
 
-function VideoPlayer() {
-  const videoPath = '~/BACKEND/outputs/out.mp4';  
+function VideoPlayer({ vurl }) {  
 
   const videoStyles = {
     width: '100%',    // Take the full width of the container
@@ -10,12 +9,14 @@ function VideoPlayer() {
   };
 
   return (
-    <div>
+    vurl && (
+      <div>
       <video style={videoStyles} controls>
-        <source src={videoPath} type="video/mp4" />
+        <source src={vurl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
+    )
   );
 }
 

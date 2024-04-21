@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 
-export default function Sidebar() {
+export default function Sidebar({ setVurl }) {
   const [videoFile, setVideoFile] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
@@ -59,13 +59,14 @@ export default function Sidebar() {
   
       const url = window.URL.createObjectURL(new Blob([response.data]));
       console.log("url", url)
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'trainedModel.mp4');
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url); // Clean up the URL object
-      document.body.removeChild(link);
+      setVurl(url);
+      // const link = document.createElement('a');
+      // link.href = url;
+      // link.setAttribute('download', 'trainedModel.mp4');
+      // document.body.appendChild(link);
+      // link.click();
+      // window.URL.revokeObjectURL(url); // Clean up the URL object
+      // document.body.removeChild(link);
   
       alert('Upload successful!');
     } catch (error) {
