@@ -1,23 +1,19 @@
+import './App.css';
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-import Sidebar from './components/Sidebar';
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <div style={{ display: 'flex' }}>
-        <Sidebar />
-        <div style={{ flex: 1 }}>Main Content Area</div>
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
       </div>
-    </ThemeProvider>
+    </Router>
   );
 }
 

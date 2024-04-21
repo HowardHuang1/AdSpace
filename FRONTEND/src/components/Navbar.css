@@ -1,0 +1,30 @@
+/* Assuming this is your existing navbar CSS */
+.navbar {
+    background-color: black; /* Change background color to black */
+    color: blue; /* Change text color to blue */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-nav {
+    list-style: none; /* Removes default list bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns items in a row */
+}
+
+.nav-item {
+    margin-right: 10px; /* Adds spacing between navbar items, adjust as needed */
+}
+
+.navbar a {
+    color: blue; /* Change link color to blue */
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.navbar a:hover {
+    color: lightblue; /* Optional: change hover color to light blue for better visibility */
+}
