@@ -36,18 +36,45 @@ export default function Sidebar() {
     }
 
     setIsUploading(true);
+    // try {
+    //   const response = await axios.post('http://34.125.104.107:3001/train-model', formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   });
+    //   console.log('Model training started:', response.data);
+    //   alert('Upload successful!');
+    // } catch (error) {
+    //   console.error('Error training model:', error);
+    //   alert('Error uploading files.');
+    // }
     try {
       const response = await axios.post('http://34.125.104.107:3001/train-model', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        responseType: 'blob' // Important for handling binary data like videos
       });
-      console.log('Model training started:', response.data);
+      console.log('Model training started');
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log("url", url)
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'trainedModel.mp4');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url); // Clean up the URL object
+      document.body.removeChild(link);
+  
       alert('Upload successful!');
     } catch (error) {
       console.error('Error training model:', error);
       alert('Error uploading files.');
+    } finally {
+      setIsUploading(false);
     }
+    
   };
 
   return (
