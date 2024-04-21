@@ -11,8 +11,5 @@ if [[ -z "$video_file" || -z "$image_file" || -z "$output_path" ]]; then
   exit 1
 fi
 
-# Activate Conda environment
-source activate gc || { echo "Failed to activate Conda environment"; exit 1; }
-
 # Run the Python script with the video, image, and output path
-python run.py "$video_file" "$image_file" "$output_path"
+conda run -n gc python3 run.py --input_video $video_file --input_image $image_file --output_path $output_path
