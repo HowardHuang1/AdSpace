@@ -22,14 +22,32 @@ const upload = multer({ storage: storage });
 app.use(cors());
 
 // Setup the /train-model route to accept file uploads
-app.post('/train-model', upload.array('video', 12), (req, res) => {
-  // Supports up to 12 files.
+app.post('/train-model', upload.fields([
+  { name: 'video', maxCount: 12 },
+  { name: 'image', maxCount: 10 },
+  { name: 'audio', maxCount: 5 }
+]), (req, res) => {
   console.log("/train-model triggered");
-  console.log(`Uploaded ${req.files.length} files.`);
 
-  video_file = "video.mp4"
-  image_file = ""
-  output_path = "outputs/out.mp4"
+  // Check files and print the uploaded files
+  if (req.files['video']) {
+    console.log(`Uploaded ${req.files['video'].length} video(s).`);
+  }
+  if (req.files['image']) {
+    console.log(`Uploaded ${req.files['image'].length} image(s).`);
+  }
+  if (req.files['audio']) {
+    console.log(`Uploaded ${req.files['audio'].length} audio file(s).`);
+  }
+
+  // Assuming only one video and one image are required for the script
+  const video_file = req.files['video'] ? req.files['video'][0].path : '';
+  const image_file = req.files['image'] ? req.files['image'][0].path : '';
+  const output_path = "outputs/out.mp4";
+  // video_file = "video.mp4"
+  // image_file = "image.jpeg"
+  // output_path = "outputs/out.mp4"
+  
   // You can execute the shell script here if needed, pass file info etc.
   exec(`./train.sh ${video_file} ${image_file} ${output_path}`, (error, stdout, stderr) => {
     if (error) {
