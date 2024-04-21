@@ -52,8 +52,7 @@ app.post('/train-model', upload.fields([
             console.log('File sent successfully');
         }
       });
-    }
-  );
+  });
 });
 
 app.get("/", (req, res) => {

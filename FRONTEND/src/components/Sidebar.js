@@ -37,7 +37,7 @@ export default function Sidebar() {
 
     setIsUploading(true);
     try {
-      const response = await axios.post('http://localhost:3001/train-model', formData, {
+      const response = await axios.post('http://34.125.104.107:3001/train-model', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -48,7 +48,6 @@ export default function Sidebar() {
       console.error('Error training model:', error);
       alert('Error uploading files.');
     }
-    setIsUploading(false);
   };
 
   return (
